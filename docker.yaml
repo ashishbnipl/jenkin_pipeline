@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t my-image .'
+            }
+        }
+        stage('Push') {
+            steps {
+                sh 'az acr login --name myregistry'
+                sh 'docker tag my-image myregistry.azurecr.io/my-image:latest'
+                sh 'docker push myregistry.azurecr.io/my-image:latest'
+            }
+        }
+    }
+}

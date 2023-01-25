@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    helm.init()
+                }
+                script {
+                    helm.install("mychart", "-n mynamespace", "--set image.tag=${env.BUILD_ID}")
+                }
+            }
+        }
+    }
+}

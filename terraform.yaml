@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Initialize') {
+            steps {
+                azureLogin('your-service-principal-name')
+                azureTerraformInit()
+            }
+        }
+        stage('Plan') {
+            steps {
+                azureTerraformPlan()
+            }
+        }
+        stage('Apply') {
+            steps {
+                azureTerraformApply()
+            }
+        }
+    }
+}
